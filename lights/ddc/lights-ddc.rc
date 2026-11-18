@@ -1,0 +1,8 @@
+# Opens only the DDC buses of connected monitors; boards make /dev/i2c-*
+# group system (see README.md).
+service vendor.light-ddc /vendor/bin/hw/android.hardware.lights-service.ddc
+    class hal
+    interface aidl android.hardware.light.ILights/default
+    user system
+    group system
+    shutdown critical

@@ -1,0 +1,21 @@
+# Lights HAL that sets external monitors' brightness over DDC/CI.
+type hal_light_ddc, domain;
+hal_server_domain(hal_light_ddc, hal_light)
+
+type hal_light_ddc_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_light_ddc)
+
+# I2C character devices. The HAL opens only the DDC bus a connected DRM
+# connector links to, never the board's other buses.
+type i2c_device, dev_type;
+allow hal_light_ddc i2c_device:chr_file rw_file_perms;
+
+# DRM connectors (status, ddc link). Boards label their connector directories
+# sysfs_drm_connector in genfs_contexts; /sys/class/drm itself and its links to
+# them stay plain sysfs.
+type sysfs_drm_connector, fs_type, sysfs_type;
+allow hal_light_ddc sysfs:dir r_dir_perms;
+allow hal_light_ddc sysfs:lnk_file read;
+allow hal_light_ddc sysfs_drm_connector:dir search;
+allow hal_light_ddc sysfs_drm_connector:file r_file_perms;
+allow hal_light_ddc sysfs_drm_connector:lnk_file read;

@@ -1,0 +1,28 @@
+package {
+    default_applicable_licenses: ["hardware_radicales_license"],
+}
+
+// Lights HAL for external monitors: the backlight level goes to the monitor
+// over DDC/CI (VESA MCCS luminance).
+cc_binary {
+    name: "android.hardware.lights-service.ddc",
+    relative_install_path: "hw",
+    vendor: true,
+    init_rc: ["lights-ddc.rc"],
+    vintf_fragments: ["lights-ddc.xml"],
+    srcs: [
+        "Ddc.cpp",
+        "Lights.cpp",
+        "main.cpp",
+    ],
+    shared_libs: [
+        "android.hardware.light-V2-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "liblog",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

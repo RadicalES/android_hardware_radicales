@@ -1,0 +1,2 @@
+/vendor/bin/hw/android\.hardware\.lights-service\.ddc   u:object_r:hal_light_ddc_exec:s0
+/dev/i2c-[0-9]+                                         u:object_r:i2c_device:s0
